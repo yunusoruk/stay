@@ -27,7 +27,6 @@ export const metadata = {
     "Next.js",
     "React",
     "Tailwind CSS",
-    "Server Components",
     "Radix UI",
   ],
   authors: [
