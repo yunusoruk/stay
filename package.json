@@ -27,6 +27,7 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "@uploadthing/react": "^5.6.2",
     "@vercel/analytics": "^1.0.1",
     "autoprefixer": "10.4.14",
     "axios": "^1.5.1",
@@ -58,6 +59,7 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
+    "uploadthing": "^5.7.1",
     "world-countries": "^5.0.0",
     "zod": "^3.22.4",
     "zustand": "^4.4.3"

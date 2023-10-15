@@ -17,6 +17,7 @@ import { categories } from '../Categories';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import { FileUpload } from '../file-upload';
 
 
 enum STEPS {
@@ -90,7 +91,6 @@ const RentModal = ({ }) => {
     }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data);
 
         if (step !== STEPS.PRICE) {
             return onNext()
@@ -132,6 +132,7 @@ const RentModal = ({ }) => {
                     Pick a category
                 </DialogDescription>
             </DialogHeader>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
                 {categories.map((item) => (
@@ -235,10 +236,30 @@ const RentModal = ({ }) => {
                         Show guests what your place looks like!
                     </DialogDescription>
                 </DialogHeader>
-                <ImageUpload
-                    onChange={(value) => setCustomValue('imageSrc', value)}
-                    value={imageSrc}
-                />
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <div className="space-y-8 px-6">
+                            <div className="flex items-center justify-center text-center">
+                                <FormField
+                                    control={form.control}
+                                    name="imageSrc"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <FileUpload
+                                                    endpoint="serverImage"
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
+
+                    </form>
+                </Form>
                 <div className="flex flex-row">
                     <Button variant='secondary' onClick={onBack}>
                         Back
