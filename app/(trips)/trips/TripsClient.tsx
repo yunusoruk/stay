@@ -52,6 +52,7 @@ const TripsClient: FC<TripsClientProps> = ({
             </PageHeader>
             <Separator className="mt-4" />
             <div
+
                 className='
                     mt-10
                     grid
