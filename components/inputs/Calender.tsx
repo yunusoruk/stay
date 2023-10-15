@@ -26,6 +26,14 @@ const Calender: FC<CalenderProps> = ({
             showDateDisplay={false}
             minDate={new Date()}
             disabledDates={disabledDates}
+            className='border rounded-md '
+            classNames={{
+                calendarWrapper: "w-full flex justify-center",
+                dateDisplayWrapper: 'bg-red-500',
+                dateRangeWrapper: 'bg-black',      // Adds space between months
+                // predefinedRangesWrapper: 'hidden',  // Hides predefined range choices
+                monthAndYearWrapper: 'text-center font-semibold', // Centers the month/year display and makes it bold
+            }}
         />
     );
 }

@@ -10,6 +10,7 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import { useMounted } from '@/hooks/use-mounted';
 
 const Map = dynamic(() => import('../Map'))
 
@@ -36,6 +37,8 @@ const ListingInfo: FC<ListingInfoProps> = ({
     locationValue,
     guestCount
 }) => {
+
+    useMounted()
 
     const { getByValue } = useCountries()
 

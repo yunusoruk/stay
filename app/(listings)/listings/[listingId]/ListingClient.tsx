@@ -153,6 +153,7 @@ const ListingClient: FC<ListingClientProps> = ({
                                 mb-10
                                 md:order-last
                                 md:col-span-3
+                                
                             '
                         >
                             <ListingReservation
@@ -164,6 +165,7 @@ const ListingClient: FC<ListingClientProps> = ({
                                 disabled={isLoading}
                                 disabledDates={disabledDates}
                             />
+
 
                         </div>
                     </div>
