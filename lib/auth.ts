@@ -1,109 +1,71 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials"
 import { Client } from "postmark"
+import bcrypt from 'bcrypt'
 
 import { siteConfig } from "@/config/site"
 import { prismadb } from "@/lib/prismadb"
 
-const postmarkClient = new Client(process.env.POSTMARK_API_TOKEN as string)
 
-export const authOptions: NextAuthOptions = {
-  // huh any! I know.
-  // This is a temporary fix for prisma client.
-  // @see https://github.com/prisma/prisma/issues/16117
-  adapter: PrismaAdapter(prismadb as any),
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    signIn: "/login",
-  },
+
+export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prismadb),
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }),
-    // EmailProvider({
-    //   from: env.SMTP_FROM,
-    //   sendVerificationRequest: async ({ identifier, url, provider }) => {
-    //     const user = await prismadb.user.findUnique({
-    //       where: {
-    //         email: identifier,
-    //       },
-    //       select: {
-    //         emailVerified: true,
-    //       },
-    //     })
+      GitHubProvider({
+          clientId: process.env.GITHUB_ID as string,
+          clientSecret: process.env.GITHUB_SECRET as string
+      }),
+      GoogleProvider({
+          clientId: process.env.GOOGLE_ID as string,
+          clientSecret: process.env.GOOGLE_SECRET as string
+      }),
+      CredentialsProvider({
+          name: 'credentials',
+          credentials: {
+            email: { label: 'email', type: 'text' },
+            password: { label: 'password', type: 'password' }
+          },
+          async authorize(credentials) {
+              if(!credentials?.email || !credentials?.password) {
+                  throw new Error('Invalid credentials')
+              }
 
-    //     const templateId = user?.emailVerified
-    //       ? env.POSTMARK_SIGN_IN_TEMPLATE
-    //       : env.POSTMARK_ACTIVATION_TEMPLATE
-    //     if (!templateId) {
-    //       throw new Error("Missing template id")
-    //     }
+              const user = await prismadb.user.findUnique({
+                  where: {
+                      email: credentials.email
+                  }
+              })
 
-    //     const result = await postmarkClient.sendEmailWithTemplate({
-    //       TemplateId: parseInt(templateId),
-    //       To: identifier,
-    //       From: provider.from as string,
-    //       TemplateModel: {
-    //         action_url: url,
-    //         product_name: siteConfig.name,
-    //       },
-    //       Headers: [
-    //         {
-    //           // Set this to prevent Gmail from threading emails.
-    //           // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
-    //           Name: "X-Entity-Ref-ID",
-    //           Value: new Date().getTime() + "",
-    //         },
-    //       ],
-    //     })
+              if(!user || !user?.hashedPassword) {
+                  throw new Error('Invalid credentials')
+              }
 
-    //     if (result.ErrorCode) {
-    //       throw new Error(result.Message)
-    //     }
-    //   },
-    // }),
-  ],
-  callbacks: {
-    async session({ token, session }) {
-      if (token) {
-        session.user.id = token.id
-        session.user.name = token.name
-        session.user.email = token.email
-        session.user.image = token.picture
-      }
+              const isCorrectPassword = await bcrypt.compare(
+                  credentials.password,
+                  user.hashedPassword
+              )
 
-      return session
-    },
-    async jwt({ token, user }) {
-      const dbUser = await prismadb.user.findFirst({
-        where: {
-          email: token.email,
-        },
+              if(!isCorrectPassword) {
+                  throw new Error('Invalid credentials')
+              }
+
+              return user
+          }
       })
-
-      if (!dbUser) {
-        if (user) {
-          token.id = user?.id
-        }
-        return token
-      }
-
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        picture: dbUser.image,
-      }
-    },
+  ],
+  pages: {
+      signIn: '/',
   },
+  debug: process.env.NODE_ENV === 'development',
+  session: {
+      strategy: 'jwt'
+  },
+  secret: process.env.NEXTAUTH_SECRET
 }
+
+export default NextAuth(authOptions)

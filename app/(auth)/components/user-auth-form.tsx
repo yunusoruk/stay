@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import { userAuthSchema } from "@/lib/validations/auth"
+import { userLoginSchema } from "@/lib/validations/auth"
 import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -18,7 +18,7 @@ import { FcGoogle } from "react-icons/fc"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
-type FormData = z.infer<typeof userAuthSchema>
+type FormData = z.infer<typeof userLoginSchema>
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const {
@@ -26,7 +26,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         handleSubmit,
         formState: { errors },
     } = useForm<FormData>({
-        resolver: zodResolver(userAuthSchema),
+        resolver: zodResolver(userLoginSchema),
     })
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
@@ -37,10 +37,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: FormData) {
         setIsLoading(true)
 
-        const signInResult = await signIn("email", {
+        const signInResult = await signIn("credentials", {
             email: data.email.toLowerCase(),
+            password: data.password,
             redirect: false,
-            callbackUrl: searchParams?.get("from") || "/dashboard",
+            callbackUrl: searchParams?.get("from") || "/",
         })
 
         setIsLoading(false)
@@ -80,6 +81,23 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                         {errors?.email && (
                             <p className="px-1 text-xs text-red-600">
                                 {errors.email.message}
+                            </p>
+                        )}
+                    </div>
+                    <div className="grid gap-1">
+                        <Label className="sr-only" htmlFor="password">
+                            Password
+                        </Label>
+                        <Input
+                            id="password"
+                            placeholder="Enter your password"
+                            type="password"
+                            disabled={isLoading || isGitHubLoading}
+                            {...register("password")}
+                        />
+                        {errors?.password && (
+                            <p className="px-1 text-xs text-red-600">
+                                {errors.password.message}
                             </p>
                         )}
                     </div>

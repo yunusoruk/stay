@@ -12,12 +12,16 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/components/user-avatar"
+import { useModal } from "@/hooks/use-modal-store"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
     user: Pick<User, "name" | "image" | "email">
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+
+    const { onOpen } = useModal()
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
@@ -39,17 +43,24 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/trips">Trips</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard/billing">Billing</Link>
+                    <Link href="/favorites">Favorites</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard/settings">Settings</Link>
+                    <Link href="/reservations">Reservations</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard/admin">Admin Panel</Link>
+                    <Link href="/properties">Properties</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="cursor-pointer"
+                    onSelect={() => onOpen('rentModal')}
+                >
+                    List a new Stay
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className="cursor-pointer"
