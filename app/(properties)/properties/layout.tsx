@@ -11,6 +11,7 @@ import { notFound } from "next/navigation"
 import Search from "@/components/search"
 import { Icons } from "@/components/icons"
 import { useModal } from "@/hooks/use-modal-store"
+import MyHome from "@/components/my-home"
 
 
 interface MarketingLayoutProps {
@@ -31,16 +32,8 @@ export default async function MarketingLayout({
                     <MainNav items={marketingConfig.mainNav} />
                     <Search />
                     <div className="flex flex-row items-center space-x-8">
-                        <Button
-                            variant='ghost'
+                        <MyHome />
 
-                        >
-                            <p className="flex flex-row items-center">
-                                <Icons.home size={16} className="mr-2" />
-                                My home
-                            </p>
-
-                        </Button>
                         {user ? (
                             <UserAccountNav
                                 user={{

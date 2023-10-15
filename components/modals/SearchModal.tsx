@@ -34,7 +34,7 @@ interface SearchModalProps { }
 
 const SearchModal: FC<SearchModalProps> = ({ }) => {
 
-    const { isOpen, onClose, type, data, updateData } = useModal();
+    const { isOpen, onClose, type } = useModal();
 
     const router = useRouter()
     const params = useSearchParams()
@@ -51,6 +51,9 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
         endDate: new Date(),
         key: 'selection'
     })
+
+    console.log(location);
+
 
     const Map = useMemo(() => dynamic(() => import('../Map'), {
         ssr: false
@@ -99,9 +102,9 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
             query: updatedQuery
         }, { skipNull: true })
 
-        setStep(STEPS.LOCATION)
         onClose()
         router.push(url)
+        setStep(STEPS.LOCATION)
 
     }, [step, router, guestCount, roomCount, bathroomCount, location, dateRange, onNext, params])
 
@@ -123,8 +126,9 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
 
     const handleClose = useCallback(() => {
 
-        setStep(STEPS.LOCATION)
         onClose()
+        setStep(STEPS.LOCATION)
+
     }, [])
 
     let bodyContent = (
@@ -162,6 +166,7 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
                 <Calender
                     value={dateRange}
                     onChange={(value) => setDateRange(value.selection)}
+
                 />
                 <div className="flex">
                     <Button variant='secondary' onClick={onBack}>

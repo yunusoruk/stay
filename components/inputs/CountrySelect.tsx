@@ -1,8 +1,19 @@
 'use client'
 
 import type { FC } from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
 import useCountries from '@/hooks/useCountries';
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { ScrollArea } from '../ui/scroll-area';
 
 export type CountrySelectValue = {
     flag: string;
@@ -24,36 +35,36 @@ const CountrySelect: FC<CountrySelectProps> = ({ value, onChange }) => {
     const { getAll } = useCountries()
 
     return (
-        <div>
-            <Select
-                placeholder="Nereye gidiyorsun?"
-                isClearable
-                options={getAll()}
-                value={value}
-                onChange={(value) => onChange(value as CountrySelectValue)}
-                formatOptionLabel={(option: any) => (
-                    <div className='flex flex-row items-center gap-3'>
-                        <div>{option.flag}</div>
-                        <div>{option.label}, <span className='text-muted-foreground ml-1' >{option.region}</span></div>
-                    </div>
+        <Select onValueChange={(country) => onChange(country as any)} >
+            <SelectTrigger >
+                <SelectValue placeholder="Choose a country.." />
+            </SelectTrigger>
+            <SelectContent>
+                <ScrollArea className='h-72 '>
+                    <SelectGroup>
+                        <SelectLabel>Countries</SelectLabel>
+                        {getAll().map((country) => (
+                            <SelectItem
+                                key={country.value}
+                                value={country as any}
+                            >
+                                <div className="flex flex-row space-x-2">
+                                    <div className="">
+                                        {country.flag}
+                                    </div>
+                                    <div>
+                                        {country.label},
+                                        <span className='text-muted-foreground' >{" "}{country.region}</span>
+                                    </div>
+                                </div>
+                            </SelectItem>
 
-                )}
-                classNames={{
-                    control: () => ' p-1 border-2 border-dahsed',
-                    input: () => 'text-lg',
-                    option: () => 'text-lg'
-                }}
-                theme={(theme) => ({
-                    ...theme,
-                    borderRadius: 6,
-                    colors: {
-                        ...theme.colors,
-                        primary: 'black',
-                        primary25: '#ffe4e6'
-                    }
-                })}
-            />
-        </div>
+                        ))}
+                    </SelectGroup>
+                </ScrollArea>
+
+            </SelectContent>
+        </Select>
     );
 }
 export default CountrySelect;

@@ -20,8 +20,6 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
 
-    const { onOpen } = useModal()
-
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
@@ -54,12 +52,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                 <DropdownMenuItem asChild>
                     <Link href="/properties">Properties</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                    className="cursor-pointer"
-                    onSelect={() => onOpen('rentModal')}
-                >
-                    List a new Stay
-                </DropdownMenuItem>
+
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
