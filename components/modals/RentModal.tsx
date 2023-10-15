@@ -16,8 +16,8 @@ import { useModal } from '@/hooks/use-modal-store';
 import { categories } from '../Categories';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 
-interface RentModalProps { }
 
 enum STEPS {
     CATEGORY = 0,
@@ -28,10 +28,9 @@ enum STEPS {
     PRICE = 5,
 }
 
-const RentModal: FC<RentModalProps> = ({ }) => {
+const RentModal = ({ }) => {
 
     const { isOpen, onClose, type } = useModal();
-
     const router = useRouter()
 
     const isModalOpen = isOpen && type === "rentModal";
@@ -40,14 +39,7 @@ const RentModal: FC<RentModalProps> = ({ }) => {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        watch,
-        formState: { errors },
-        reset
-    } = useForm<FieldValues>({
+    const form = useForm<FieldValues>({
         defaultValues: {
             category: '',
             location: null,
@@ -61,6 +53,15 @@ const RentModal: FC<RentModalProps> = ({ }) => {
 
         }
     })
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+        reset
+    } = form
 
     const category = watch('category')
     const location = watch('location')
@@ -131,6 +132,7 @@ const RentModal: FC<RentModalProps> = ({ }) => {
                     Pick a category
                 </DialogDescription>
             </DialogHeader>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
                 {categories.map((item) => (
                     <div key={item.label} className='col-span-1'>
@@ -308,8 +310,8 @@ const RentModal: FC<RentModalProps> = ({ }) => {
                     <Button variant='secondary' onClick={onBack}>
                         Back
                     </Button>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Button className='ml-auto' onClick={onSubmit} type='submit'>
+                    <form className='ml-auto' onSubmit={handleSubmit(onSubmit)}>
+                        <Button onClick={onSubmit} type='submit'>
                             Create
                         </Button>
                     </form>

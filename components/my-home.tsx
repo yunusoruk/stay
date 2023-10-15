@@ -10,6 +10,7 @@ const MyHome = () => {
 
     return (
         <Button
+            className="hidden md:block"
             variant='ghost'
             onClick={() => onOpen('rentModal')}
         >

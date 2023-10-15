@@ -28,16 +28,16 @@ export function MainNav({ items, children }: MainNavProps) {
                     {siteConfig.name}
                 </span>
             </Link>
-            <button
+            {/* <button
                 className="flex items-center space-x-2 md:hidden"
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
             >
                 {showMobileMenu ? <X /> : <Logo />}
                 <span className="font-bold">Menu</span>
-            </button>
-            {showMobileMenu && items && (
+            </button> */}
+            {/* {showMobileMenu && items && (
                 <MobileNav items={items}>{children}</MobileNav>
-            )}
+            )} */}
         </div>
     )
 }

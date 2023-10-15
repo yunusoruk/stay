@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: HomeProps) {
                 <PageHeaderHeading className="hidden md:block">
                     Find your next stay
                 </PageHeaderHeading>
-                <PageHeaderHeading className="md:hidden">Examples</PageHeaderHeading>
+                <PageHeaderHeading className="md:hidden">Find your next stay</PageHeaderHeading>
                 <PageHeaderDescription>
                     Search low prices on hotels, homes and much more...
                 </PageHeaderDescription>

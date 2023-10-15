@@ -87,7 +87,7 @@ const Search = () => {
                 <div
                     className='
                     hidden
-                    sm:block
+                    lg:block
                     text-sm
                     font-semibold
                     px-6
@@ -110,7 +110,7 @@ const Search = () => {
                     border-r-[1px]
                 '
                 >
-                    <div className="hidden font-semibold sm:block">
+                    <div className="hidden font-semibold lg:block">
                         {guestLabel}
                     </div>
 
