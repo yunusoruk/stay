@@ -48,7 +48,7 @@ const TripsClient: FC<TripsClientProps> = ({
 
             <PageHeader className="pt-8 pb-4">
                 <PageHeaderHeading>Trips</PageHeaderHeading>
-                <PageHeaderDescription>Where you've been and where you're going</PageHeaderDescription>
+                <PageHeaderDescription>Where you&apos;ve been and where you&apos;re going?</PageHeaderDescription>
             </PageHeader>
             <Separator className="mt-4" />
             <div

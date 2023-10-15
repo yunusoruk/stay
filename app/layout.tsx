@@ -32,8 +32,8 @@ export const metadata = {
   ],
   authors: [
     {
-      name: "keci",
-      url: "https://keci.io",
+      name: "stay",
+      url: "https://stay.io",
     },
   ],
   creator: "keci",
@@ -54,7 +54,7 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.jpg`],
-    creator: "@shadcn",
+    creator: "@yo",
   },
   icons: {
     icon: "/favicon.ico",
