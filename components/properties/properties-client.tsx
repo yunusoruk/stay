@@ -1,7 +1,7 @@
 'use client'
 
-import ListingCard from '@/components/listings/ListingCard';
-import { SafeReservation, SafeUser } from '@/types';
+import ListingCard from '@/components/listings/listing-card';
+import { SafeListing, SafeReservation, SafeUser } from '@/types';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback, useState } from 'react';
@@ -9,51 +9,49 @@ import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/componen
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 
-interface ReservationsClientProps {
-    reservations: SafeReservation[]
+
+interface PropertiesClientProps {
+    listings: SafeListing[]
     currentUser?: SafeUser | null
 }
 
-const ReservationsClient: FC<ReservationsClientProps> = ({
-    reservations,
+const PropertiesClient: FC<PropertiesClientProps> = ({
+    listings,
     currentUser
 }) => {
 
-    //router
     const router = useRouter()
-
     const [deletingId, setDeletingId] = useState('')
-    //onCancel and states
 
     const onCancel = useCallback((id: string) => {
         setDeletingId(id)
-        axios.delete(`/api/reservations/${id}`)
+
+        axios.delete(`/api/listings/${id}`)
             .then(() => {
                 toast({
-                    description: "Reservation successfully cancelled."
+                    description: "Listing successfully deleted."
                 })
                 router.refresh()
             })
             .catch((error) => {
                 toast({
-                    description: 'Something went wrong'
+                    description: "Something went wrong."
                 })
             })
             .finally(() => {
                 setDeletingId('')
             })
+
     }, [router])
-    //container heading listingcard
 
     return (
         <div className='container'>
 
             <PageHeader className="pt-8 pb-4">
-                <PageHeaderHeading>Reservations</PageHeaderHeading>
-                <PageHeaderDescription>Booking on your properties</PageHeaderDescription>
+                <PageHeaderHeading>Properties</PageHeaderHeading>
+                <PageHeaderDescription>List of your properties</PageHeaderDescription>
             </PageHeader>
             <Separator className="mt-4" />
-
             <div
                 className='
                     mt-10
@@ -67,20 +65,20 @@ const ReservationsClient: FC<ReservationsClientProps> = ({
                     gap-8
                 '
             >
-                {reservations.map((reservation: any) => (
+                {listings.map((listing: any) => (
                     <ListingCard
-                        reservation={reservation}
-                        data={reservation.listing}
-                        key={reservation.id}
-                        disabled={reservation.id === deletingId}
-                        actionId={reservation.id}
+                        key={listing.id}
+                        data={listing}
+                        actionId={listing.id}
                         onAction={onCancel}
-                        actionLabel='Cancel guest reservation'
+                        disabled={deletingId === listing.id}
+                        actionLabel='Remove listing'
                         currentUser={currentUser}
                     />
                 ))}
+
             </div>
         </div>
     );
 }
-export default ReservationsClient;
+export default PropertiesClient;

@@ -32,27 +32,27 @@ export const metadata = {
   authors: [
     {
       name: "stay",
-      url: "https://stay.io",
+      url: "https://stay-yo.vercel.app",
     },
   ],
-  creator: "keci",
+  creator: "stay",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
-  openGraph: {
-    type: "website",
-    locale: "tr_TR",
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
+  // openGraph: {
+  //   type: "website",
+  //   locale: "tr_TR",
+  //   url: siteConfig.url,
+  //   title: siteConfig.name,
+  //   description: siteConfig.description,
+  //   siteName: siteConfig.name,
+  // },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
+    // images: [`${siteConfig.url}/og.jpg`],
     creator: "@yo",
   },
   icons: {
@@ -60,7 +60,7 @@ export const metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  manifest: `${siteConfig.url}/site.webmanifest`,
+  // manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 
@@ -71,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr">
+    <html lang="tr" suppressHydrationWarning>
       <head />
       <body
         className={cn(

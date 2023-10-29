@@ -1,6 +1,6 @@
 'use client'
 
-import ListingCard from '@/components/listings/ListingCard';
+import ListingCard from '@/components/listings/listing-card';
 import { SafeReservation, SafeUser } from '@/types';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';

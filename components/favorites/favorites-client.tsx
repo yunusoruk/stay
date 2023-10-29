@@ -1,4 +1,4 @@
-import ListingCard from "@/components/listings/ListingCard";
+import ListingCard from "@/components/listings/listing-card";
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header";
 import { Separator } from "@/components/ui/separator";
 // import Heading from "@/components/navbar/Heading";

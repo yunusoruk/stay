@@ -1,23 +1,23 @@
 'use client'
 
 import { FC, useCallback, useMemo, useState } from 'react';
-import useRentModal from '@/hooks/useRentModal';
-import CategoryInput from '../inputs/CategoryInput';
+import useRentModal from '@/hooks/use-rent-modal';
+import CategoryInput from '../inputs/category-input';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import CountrySelect from '../inputs/CountrySelect';
+import CountrySelect from '../inputs/country-select';
+import Input from '../inputs/input';
 import dynamic from 'next/dynamic';
-import Counter from '../inputs/Counter';
-import ImageUpload from '../inputs/ImageUpload';
-import Input from '../inputs/Input';
+import ImageUpload from '../inputs/image-upload';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle, DialogContent } from '../ui/dialog';
 import { useModal } from '@/hooks/use-modal-store';
-import { categories } from '../Categories';
+import { categories } from '../categories';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { FileUpload } from '../file-upload';
+import Counter from '../inputs/counter';
 
 
 enum STEPS {
@@ -71,7 +71,7 @@ const RentModal = ({ }) => {
     const bathroomCount = watch('bathroomCount')
     const imageSrc = watch('imageSrc')
 
-    const Map = useMemo(() => dynamic(() => import('../Map'), {
+    const Map = useMemo(() => dynamic(() => import('../map'), {
         ssr: false
     }), [location])
 

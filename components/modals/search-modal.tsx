@@ -2,27 +2,22 @@
 
 import qs from 'query-string'
 import { FC, useCallback, useMemo, useState } from 'react';
-import useSearchModal from '@/hooks/useSearchModal';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect';
-import { Range } from 'react-date-range';
+import CountrySelect, { CountrySelectValue } from '../inputs/country-select';
 import dynamic from 'next/dynamic';
-import axios from 'axios';
 import { formatISO } from 'date-fns';
-// import Heading from '../navbar/Heading';
-import Calender from '../inputs/Calender';
-import Counter from '../inputs/Counter';
-import Modal from '../Modal';
+import Counter from '../inputs/counter';
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '../ui/button';
+import { Calendar } from '../ui/calendar';
+import { DateRange } from 'react-day-picker';
 
 enum STEPS {
     LOCATION = 0,
@@ -46,16 +41,15 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
     const [guestCount, setGuestCount] = useState(1)
     const [roomCount, setRoomCount] = useState(1)
     const [bathroomCount, setBathroomCount] = useState(1)
-    const [dateRange, setDateRange] = useState<Range>({
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection'
+    const [dateRange, setDateRange] = useState<DateRange>({
+        from: new Date(),
+        to: new Date(),
     })
 
     console.log(location);
 
 
-    const Map = useMemo(() => dynamic(() => import('../Map'), {
+    const Map = useMemo(() => dynamic(() => import('../map'), {
         ssr: false
     }), [location])
 
@@ -89,12 +83,13 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
         }
 
         // Turn date values to string so we can use it on URL
-        if (dateRange.startDate) {
-            updatedQuery.startDate = formatISO(dateRange.startDate)
+        if (dateRange.from) {
+            updatedQuery.startDate = formatISO(dateRange.from)
+
         }
 
-        if (dateRange.endDate) {
-            updatedQuery.endDate = formatISO(dateRange.endDate)
+        if (dateRange.to) {
+            updatedQuery.endDate = formatISO(dateRange.to)
         }
 
         const url = qs.stringifyUrl({
@@ -106,7 +101,7 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
         router.push(url)
         setStep(STEPS.LOCATION)
 
-    }, [step, router, guestCount, roomCount, bathroomCount, location, dateRange, onNext, params])
+    }, [step, router, guestCount, roomCount, bathroomCount, location, dateRange, onNext, params, onClose])
 
     const actionLabel = useMemo(() => {
         if (step === STEPS.INFO) {
@@ -129,7 +124,7 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
         onClose()
         setStep(STEPS.LOCATION)
 
-    }, [])
+    }, [onClose])
 
     let bodyContent = (
         <DialogContent>
@@ -163,11 +158,20 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
                 <DialogDescription>
                     Make sure everyone is free
                 </DialogDescription>
-                <Calender
-                    value={dateRange}
-                    onChange={(value) => setDateRange(value.selection)}
+                <div className="flex flex-col gap-8">
+                    <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={(value) => setDateRange(value as DateRange)}
+                        numberOfMonths={1}
+                        disabled={{
+                            before: new Date()
+                        }}
+                    />
+                </div>
 
-                />
                 <div className="flex">
                     <Button variant='secondary' onClick={onBack}>
                         {secondaryActionLabel}

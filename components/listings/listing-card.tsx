@@ -1,6 +1,6 @@
 'use client'
 
-import useCountries from '@/hooks/useCountries';
+import useCountries from '@/hooks/use-countries';
 import { SafeUser, SafeListing, SafeReservation } from '@/types';
 import { Listing, Reservation } from '@prisma/client';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,7 @@ import { format } from 'date-fns'
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import HeartButton from '../HeartButton';
+import HeartButton from '../heart-button';
 // import HeartButton from '../HeartButton';
 
 interface ListingCardProps {
@@ -81,6 +81,7 @@ const ListingCard: FC<ListingCardProps> = ({
                         fill
                         alt='listing'
                         src={data.imageSrc}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className='
                                 object-cover
                                 h-full

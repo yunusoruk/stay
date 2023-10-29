@@ -1,8 +1,8 @@
 "use client";
 
 import { useMounted } from "@/hooks/use-mounted";
-import SearchModal from "../modals/SearchModal";
-import RentModal from "../modals/RentModal";
+import SearchModal from "../modals/search-modal";
+import RentModal from "../modals/rent-modal";
 
 
 

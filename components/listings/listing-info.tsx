@@ -1,9 +1,9 @@
-import useCountries from '@/hooks/useCountries';
+import useCountries from '@/hooks/use-countries';
 import { SafeUser } from '@/types';
 import type { FC } from 'react';
 import { IconType } from 'react-icons';
 // import Avatar from '../Avatar';
-import ListingCategory from './ListingCategory';
+import ListingCategory from './listing-category';
 import dynamic from 'next/dynamic';
 import {
     Avatar,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/avatar"
 import { useMounted } from '@/hooks/use-mounted';
 
-const Map = dynamic(() => import('../Map'))
+const Map = dynamic(() => import('../map'))
 
 interface ListingInfoProps {
     user: SafeUser

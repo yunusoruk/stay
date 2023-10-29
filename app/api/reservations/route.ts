@@ -1,4 +1,4 @@
-import getCurrentUser from "@/actions/getCurrentUser"
+import getCurrentUser from "@/actions/get-current-user"
 import { prismadb } from "@/lib/prismadb"
 import { NextResponse } from "next/server"
 

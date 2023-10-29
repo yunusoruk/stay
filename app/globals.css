@@ -5,9 +5,9 @@
 html,
 body,
 :root {
-  height: 100%
+  height: 100%;
 }
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -31,7 +31,7 @@ body,
     --ring: 346.8 77.2% 49.8%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 0 0% 95%;
@@ -55,9 +55,6 @@ body,
   }
 }
 
-
-
- 
 @layer base {
   * {
     @apply border-border;
@@ -65,4 +62,10 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+
+.rdp {
+  width: 100%;
 }

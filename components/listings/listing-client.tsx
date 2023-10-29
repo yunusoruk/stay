@@ -1,10 +1,10 @@
 'use client'
 
-import { categories } from '@/components/Categories';
-import ListingHead from '@/components/listings/ListingHead';
-import ListingInfo from '@/components/listings/ListingInfo';
-import ListingReservation from '@/components/listings/ListingReservation';
-import useLoginModal from '@/hooks/useLoginModal';
+import { categories } from '@/components/categories';
+import ListingHead from '@/components/listings/listing-head';
+import ListingInfo from '@/components/listings/listing-info';
+import ListingReservation from '@/components/listings/listing-reservation';
+import useLoginModal from '@/hooks/use-login-modal';
 import { SafeListing, SafeReservation, SafeUser } from '@/types';
 import { Reservation } from '@prisma/client';
 import axios from 'axios';
@@ -14,11 +14,13 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Range } from 'react-date-range';
 import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
+import { DateRange } from 'react-day-picker';
+import { Calendar } from '../ui/calendar';
+
 
 const initialDateRange = {
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection'
+    from: new Date(),
+    to: new Date(),
 }
 
 interface ListingClientProps {
@@ -38,8 +40,6 @@ const ListingClient: FC<ListingClientProps> = ({
     const loginModal = useLoginModal();
     const router = useRouter();
 
-
-
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
 
@@ -48,12 +48,8 @@ const ListingClient: FC<ListingClientProps> = ({
                 start: new Date(reservation.startDate),
                 end: new Date(reservation.endDate)
             });
-
-
-
             dates = [...dates, ...rangeOfBookedDates];
         });
-
         return dates;
     }, [reservations]);
 
@@ -64,7 +60,9 @@ const ListingClient: FC<ListingClientProps> = ({
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
-    const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+    const [dateRange, setDateRange] = useState<DateRange>(initialDateRange);
+
+
 
     const onCreateReservation = useCallback(() => {
         if (!currentUser) {
@@ -74,8 +72,8 @@ const ListingClient: FC<ListingClientProps> = ({
 
         axios.post('/api/reservations', {
             totalPrice,
-            startDate: dateRange.startDate,
-            endDate: dateRange.endDate,
+            startDate: dateRange?.from,
+            endDate: dateRange?.to,
             listingId: listing?.id
         })
             .then(() => {
@@ -104,10 +102,10 @@ const ListingClient: FC<ListingClientProps> = ({
         ]);
 
     useEffect(() => {
-        if (dateRange.startDate && dateRange.endDate) {
+        if (dateRange?.from && dateRange?.to) {
             const dayCount = differenceInDays(
-                dateRange.endDate,
-                dateRange.startDate
+                dateRange?.to,
+                dateRange?.from
             );
 
             if (dayCount && listing.price) {
@@ -121,7 +119,7 @@ const ListingClient: FC<ListingClientProps> = ({
     return (
         <div className='container'>
             <div className="max-w-screen-lg mx-auto">
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
                     <ListingHead
                         title={listing.title}
                         imageSrc={listing.imageSrc}
@@ -129,6 +127,10 @@ const ListingClient: FC<ListingClientProps> = ({
                         id={listing.id}
                         currentUser={currentUser}
                     />
+
+                    <div className="flex flex-row w-full">
+
+                    </div>
                     <div
                         className='
                             grid

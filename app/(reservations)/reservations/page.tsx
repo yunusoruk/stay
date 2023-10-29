@@ -1,10 +1,10 @@
 
 
-import getCurrentUser from '@/actions/getCurrentUser';
-import getReservations from '@/actions/getReservations';
-import EmptyState from '@/components/EmptyState';
+import getCurrentUser from '@/actions/get-current-user';
+import getReservations from '@/actions/get-reservations';
+import EmptyState from '@/components/empty-state';
 import type { FC } from 'react';
-import ReservationsClient from './ReservationsClient';
+import ReservationsClient from '../../../components/reservations/reservations-client';
 
 
 const ReservationsPage = async () => {

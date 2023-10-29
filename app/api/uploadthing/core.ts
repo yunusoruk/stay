@@ -1,4 +1,4 @@
-import getCurrentUser from "@/actions/getCurrentUser";
+import getCurrentUser from "@/actions/get-current-user";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
  
 const f = createUploadthing();

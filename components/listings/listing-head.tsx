@@ -1,10 +1,10 @@
-import useCountries from '@/hooks/useCountries';
+import useCountries from '@/hooks/use-countries';
 import { SafeUser } from '@/types';
 import type { FC } from 'react';
 import Image from 'next/image';
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header";
 import { Separator } from '../ui/separator';
-import HeartButton from '../HeartButton';
+import HeartButton from '../heart-button';
 
 interface ListingHeadProps {
     title: string
