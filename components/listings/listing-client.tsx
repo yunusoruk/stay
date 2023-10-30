@@ -1,21 +1,17 @@
 'use client'
 
-import { categories } from '@/components/categories';
 import ListingHead from '@/components/listings/listing-head';
 import ListingInfo from '@/components/listings/listing-info';
 import ListingReservation from '@/components/listings/listing-reservation';
 import useLoginModal from '@/hooks/use-login-modal';
 import { SafeListing, SafeReservation, SafeUser } from '@/types';
-import { Reservation } from '@prisma/client';
 import axios from 'axios';
-import { differenceInCalendarDays, differenceInDays, eachDayOfInterval, setDate } from 'date-fns';
+import { differenceInDays, eachDayOfInterval, setDate } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Range } from 'react-date-range';
-import { Separator } from '@/components/ui/separator';
 import { toast } from '@/components/ui/use-toast';
 import { DateRange } from 'react-day-picker';
-import { Calendar } from '../ui/calendar';
+import { categories } from '../categories';
 
 
 const initialDateRange = {

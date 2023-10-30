@@ -2,7 +2,6 @@ import useCountries from '@/hooks/use-countries';
 import { SafeUser } from '@/types';
 import type { FC } from 'react';
 import { IconType } from 'react-icons';
-// import Avatar from '../Avatar';
 import ListingCategory from './listing-category';
 import dynamic from 'next/dynamic';
 import {

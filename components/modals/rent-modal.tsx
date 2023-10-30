@@ -1,15 +1,12 @@
 'use client'
 
-import { FC, useCallback, useMemo, useState } from 'react';
-import useRentModal from '@/hooks/use-rent-modal';
+import { useMemo, useState } from 'react';
 import CategoryInput from '../inputs/category-input';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CountrySelect from '../inputs/country-select';
-import Input from '../inputs/input';
 import dynamic from 'next/dynamic';
-import ImageUpload from '../inputs/image-upload';
 import axios from 'axios';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle, DialogContent } from '../ui/dialog';
 import { useModal } from '@/hooks/use-modal-store';
 import { categories } from '../categories';
@@ -18,6 +15,7 @@ import { toast } from '../ui/use-toast';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { FileUpload } from '../file-upload';
 import Counter from '../inputs/counter';
+import Input from '../inputs/input';
 
 
 enum STEPS {
