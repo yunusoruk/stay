@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import CountrySelect, { CountrySelectValue } from '../inputs/country-select';
 import dynamic from 'next/dynamic';
 import { formatISO } from 'date-fns';
-import Counter from '../inputs/counter';
 import {
     Dialog,
     DialogContent,
@@ -18,6 +17,7 @@ import { useModal } from '@/hooks/use-modal-store';
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import { DateRange } from 'react-day-picker';
+import Counter from '../rent-counter';
 
 enum STEPS {
     LOCATION = 0,

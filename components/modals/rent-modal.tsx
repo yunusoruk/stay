@@ -12,10 +12,10 @@ import { useModal } from '@/hooks/use-modal-store';
 import { categories } from '../categories';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { FileUpload } from '../file-upload';
-import Counter from '../inputs/counter';
-import Input from '../inputs/input';
+import { Input } from '../ui/input';
+import Counter from '../rent-counter';
 
 
 enum STEPS {
@@ -89,6 +89,8 @@ const RentModal = ({ }) => {
     }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        console.log(data);
+
 
         if (step !== STEPS.PRICE) {
             return onNext()
@@ -130,8 +132,6 @@ const RentModal = ({ }) => {
                     Pick a category
                 </DialogDescription>
             </DialogHeader>
-
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
                 {categories.map((item) => (
                     <div key={item.label} className='col-span-1'>
@@ -270,7 +270,6 @@ const RentModal = ({ }) => {
 
         )
     }
-
     if (step === STEPS.DESCRIPTION) {
         bodyContent = (
             <DialogContent>
@@ -278,23 +277,42 @@ const RentModal = ({ }) => {
                     <DialogTitle>How would you describe your place?</DialogTitle>
                     <DialogDescription>Short and sweet works best!</DialogDescription>
                 </DialogHeader>
-                <Input
-                    id='title'
-                    label='Title'
-                    disabled={isLoading}
-                    register={register}
-                    errors={errors}
-                    required
-                />
-                <hr />
-                <Input
-                    id='description'
-                    label='Description'
-                    disabled={isLoading}
-                    register={register}
-                    errors={errors}
-                    required
-                />
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <div className="space-y-4 px-6 py-4">
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Title
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input disabled={isLoading} {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Description
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input disabled={isLoading} {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+
+                        </div>
+
+                    </form>
+                </Form>
                 <div className="flex flex-row">
                     <Button variant='secondary' onClick={onBack}>
                         Back
@@ -315,16 +333,26 @@ const RentModal = ({ }) => {
                     <DialogTitle>Now, set your price</DialogTitle>
                     <DialogDescription>How much would you charge for night?</DialogDescription>
                 </DialogHeader>
-                <Input
-                    id='price'
-                    label='Price'
-                    formatPrice
-                    type='number'
-                    disabled={isLoading}
-                    register={register}
-                    errors={errors}
-                    required
-                />
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <div className="space-y-4 px-6 py-4">
+                            <FormField
+                                control={form.control}
+                                name="price"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Price
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input disabled={isLoading} type='number'  {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </form>
+                </Form>
                 <div className="flex flex-row">
                     <Button variant='secondary' onClick={onBack}>
                         Back
@@ -336,7 +364,6 @@ const RentModal = ({ }) => {
                     </form>
                 </div>
             </DialogContent>
-
         )
     }
 
