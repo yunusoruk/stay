@@ -46,7 +46,6 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
         to: new Date(),
     })
 
-    console.log(location);
 
 
     const Map = useMemo(() => dynamic(() => import('../listing-map'), {
@@ -158,7 +157,7 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
                 <DialogDescription>
                     Make sure everyone is free
                 </DialogDescription>
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-row items-center justify-center w-full">
                     <Calendar
                         initialFocus
                         mode="range"

@@ -15,12 +15,12 @@ const ListingCategory: FC<ListingCategoryProps> = ({
     return (
         <div className='flex flex-col gap-6'>
             <div className="flex flex-row items-center gap-4">
-                <Icon size={40} className='text-muted-foreground' />
+                <Icon size={40} className='text-primary' />
                 <div className="flex flex-col">
                     <div className="text-lg font-semibold">
                         {label}
                     </div>
-                    <div className="text-muted-foreground font-light">
+                    <div className="text-muted-foreground font-normal">
                         {description}
                     </div>
                 </div>

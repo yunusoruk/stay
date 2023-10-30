@@ -2,7 +2,7 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import SearchModal from "../modals/search-modal";
-import RentModal from "../modals/rent-modal2";
+import RentModal from "../modals/rent-modal";
 
 
 

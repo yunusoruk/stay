@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/components/provider/theme-provider'
 import { Analytics } from '@/components/analytics'
 import { Toaster } from '@/components/ui/toaster'
 import { ModalProvider } from '@/components/provider/modal-provider'
+import { TailwindIndicator } from '@/components/tailwind-indicator'
 
 const fontSans = FontSans({ subsets: ['latin'], variable: "--font-sans" })
 
@@ -71,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body
         className={cn(
@@ -85,6 +86,7 @@ export default function RootLayout({
           <ModalProvider />
           <Analytics />
           <Toaster />
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

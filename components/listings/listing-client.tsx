@@ -123,15 +123,37 @@ const ListingClient: FC<ListingClientProps> = ({
                         id={listing.id}
                         currentUser={currentUser}
                     />
+                    <div className="flex md:flex-row w-full mt-6 space-x-6">
+                        <div className="flex flex-cols-5 w-full">
+                            <ListingInfo
+                                user={listing.user}
+                                category={category}
+                                description={listing.description}
+                                roomCount={listing.roomCount}
+                                guestCount={listing.guestCount}
+                                bathroomCount={listing.bathroomCount}
+                                locationValue={listing.locationValue}
+                            />
+                        </div>
 
-                    <div className="flex flex-row w-full">
-
+                        <div className="flex md:ml-auto">
+                            <ListingReservation
+                                title={listing.title}
+                                price={listing.price}
+                                totalPrice={totalPrice}
+                                onChangeDate={(value) => setDateRange(value)}
+                                dateRange={dateRange}
+                                onSubmit={onCreateReservation}
+                                disabled={isLoading}
+                                disabledDates={disabledDates}
+                            />
+                        </div>
                     </div>
-                    <div
+                    {/* <div
                         className='
                             grid
                             grid-cols-1
-                            md:grid-cols-7
+                            md:grid-cols-8
                             md:gap-10
                             mt-6
                         '
@@ -166,7 +188,7 @@ const ListingClient: FC<ListingClientProps> = ({
 
 
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

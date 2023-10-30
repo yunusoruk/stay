@@ -29,6 +29,28 @@ enum STEPS {
     PRICE = 5,
 }
 
+const formSchema = z.object({
+    category: z.string().min(1),
+    location: z.object({
+        value: z.string(),
+        label: z.string(),
+        flag: z.string(),
+        latlng: z.array(z.number()),
+        region: z.string()
+    }),
+    guestCount: z.number().positive(),
+    roomCount: z.number().positive(),
+    bathroomCount: z.number().positive(),
+    imageSrc: z.string().min(1),
+    price: z.number().positive(),
+    title: z.string().min(1),
+    description: z.string().min(1),
+})
+
+type RentModalFormValues = z.infer<typeof formSchema>
+
+
+
 
 const RentModal = ({ }) => {
 
@@ -41,10 +63,10 @@ const RentModal = ({ }) => {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const form = useForm<FieldValues>({
+    const form = useForm<RentModalFormValues>({
         defaultValues: {
             category: '',
-            location: "",
+            location: {},
             guestCount: 1,
             roomCount: 1,
             bathroomCount: 1,
@@ -76,13 +98,7 @@ const RentModal = ({ }) => {
         ssr: false
     }), [location])
 
-    const setCustomValue = (id: string, value: any) => {
-        setValue(id, value, {
-            shouldValidate: true,
-            shouldDirty: true,
-            shouldTouch: true,
-        })
-    }
+
 
     const onBack = () => {
         setStep(value => value - 1)
@@ -91,34 +107,33 @@ const RentModal = ({ }) => {
         setStep(value => value + 1)
     }
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<RentModalFormValues> = async (data) => {
 
 
         if (step !== STEPS.PRICE) {
             return onNext()
         }
-        // try {
-        //     setIsLoading(true)
-        //     await axios.post('api/listings', data)
-        //     router.refresh()
-        //     reset() // will reset the entire form
-        //     setStep(STEPS.CATEGORY)
-        //     toast({
-        //         description: 'Listing successfully created'
-        //     })
-        //     onClose()
+        try {
+            setIsLoading(true)
+            await axios.post('api/listings', data)
+            router.refresh()
+            reset() // will reset the entire form
+            setStep(STEPS.CATEGORY)
+            toast({
+                description: 'Listing successfully created'
+            })
+            onClose()
 
-        // } catch (error) {
-        //     console.log(error);
+        } catch (error) {
+            console.log(error);
 
 
-        //     toast({
-        //         description: 'Something went wrong'
-        //     })
-        // } finally {
-        //     setIsLoading(false)
-        // }
+            toast({
+                description: 'Something went wrong'
+            })
+        } finally {
+            setIsLoading(false)
+        }
 
 
     }
@@ -142,7 +157,7 @@ const RentModal = ({ }) => {
                 {categories.map((item) => (
                     <div key={item.label} className='col-span-1'>
                         <CategoryInput
-                            onClick={(label) => setCustomValue('category', label)}
+                            onClick={(label) => setValue('category', label)}
                             selected={category === item.label}
                             label={item.label}
                             icon={item.icon}
@@ -173,8 +188,7 @@ const RentModal = ({ }) => {
                     </DialogDescription>
                 </DialogHeader>
                 <CountrySelect
-                    value={location}
-                    onChange={(value) => setCustomValue('location', value.value)}
+                    onChange={(value) => setValue('location', value)}
                 />
                 <Map
                     center={location?.latlng}
@@ -204,19 +218,19 @@ const RentModal = ({ }) => {
                     title='Guests'
                     subtitle='How many guests do you allow?'
                     value={guestCount}
-                    onChange={(value) => setCustomValue('guestCount', value)}
+                    onChange={(value) => setValue('guestCount', value)}
                 />
                 <Counter
                     title='Rooms'
                     subtitle='How many rooms do you have?'
                     value={roomCount}
-                    onChange={(value) => setCustomValue('roomCount', value)}
+                    onChange={(value) => setValue('roomCount', value)}
                 />
                 <Counter
                     title='Bathrooms'
                     subtitle='How many bathrooms do you have?'
                     value={bathroomCount}
-                    onChange={(value) => setCustomValue('bathroomCount', value)}
+                    onChange={(value) => setValue('bathroomCount', value)}
                 />
                 <div className="flex flex-row">
                     <Button variant='secondary' onClick={onBack}>
@@ -273,9 +287,10 @@ const RentModal = ({ }) => {
                     </Button>
                 </div>
             </DialogContent>
-
         )
     }
+
+
     if (step === STEPS.DESCRIPTION) {
         bodyContent = (
             <DialogContent>
@@ -357,9 +372,17 @@ const RentModal = ({ }) => {
                                 )}
                             />
                         </div>
+                        <div className="flex flex-row">
+                            <Button variant='secondary' onClick={onBack}>
+                                Back
+                            </Button>
+                            <Button onClick={() => onSubmit} type='submit' className='ml-auto'>
+                                Create
+                            </Button>
+                        </div>
                     </form>
                 </Form>
-                <div className="flex flex-row">
+                {/* <div className="flex flex-row">
                     <Button variant='secondary' onClick={onBack}>
                         Back
                     </Button>
@@ -368,7 +391,7 @@ const RentModal = ({ }) => {
                             Create
                         </Button>
                     </form>
-                </div>
+                </div> */}
             </DialogContent>
         )
     }

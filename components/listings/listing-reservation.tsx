@@ -11,6 +11,7 @@ import DatePicker from '../date-picker';
 import { DateRange } from 'react-day-picker';
 
 interface ListingReservationProps {
+    title: string
     price: number
     totalPrice: number
     onChangeDate: (value: DateRange) => void
@@ -21,6 +22,7 @@ interface ListingReservationProps {
 }
 
 const ListingReservation: FC<ListingReservationProps> = ({
+    title,
     price,
     totalPrice,
     onChangeDate,
@@ -30,37 +32,26 @@ const ListingReservation: FC<ListingReservationProps> = ({
     disabledDates
 }) => {
     return (
-        <Card className='bg-background'>
+        <Card className='bg-background border-none shadow-none '>
             <CardHeader>
-                <CardTitle className='flex flex-row items-center space-x-2'>
-                    <Label className='text-md'>
-                        {`$${price} per night`}
+                <CardTitle className='flex flex-row items-center justify-center space-x-2 line-clamp-1 pb-1'>
+                    <Label className='text-md '>A night at</Label>
+                    <Label className='text-md text-primary'>
+                        {title}
                     </Label>
                 </CardTitle>
-
             </CardHeader>
-            <Separator />
+            <Separator className='mb-2' />
             <CardContent className='flex flex-col justify-center items-center'>
-                <DatePicker
-                    value={dateRange as DateRange}
-                    disabledDates={disabledDates}
-                    onChange={(value) =>
-                        onChangeDate(value)}
-                />
-
-                <div
-                    className='w-full flex flex-row items-center'
-                >
-                    <Label className='text-lg mt-4 font-semibold'>
-                        Total
-                    </Label>
-                    <Label className='text-lg font-medium  ml-auto mt-4'>
-                        $ {totalPrice}
-                    </Label>
+                <div className="flex">
+                    <DatePicker
+                        month={1}
+                        value={dateRange as DateRange}
+                        disabledDates={disabledDates}
+                        onChange={(value) =>
+                            onChangeDate(value)}
+                    />
                 </div>
-            </CardContent>
-            <Separator />
-            <CardFooter className='flex flex-col gap-4'>
                 <div className="flex mt-6 w-full">
                     <Button
                         disabled={disabled}
@@ -69,6 +60,26 @@ const ListingReservation: FC<ListingReservationProps> = ({
                     >
                         Reserve
                     </Button>
+                </div>
+            </CardContent>
+            <CardFooter className='flex flex-col gap-4'>
+                <Separator />
+                <div className='w-full flex flex-row items-center'>
+                    <Label className='text-lg mt-4 font-semibold'>
+                        Per nigth
+                    </Label>
+                    <Label className='text-lg font-medium  ml-auto mt-4'>
+                        $ {price}
+                    </Label>
+                </div>
+
+                <div className='w-full flex flex-row items-center'>
+                    <Label className='text-lg mt-4 font-semibold'>
+                        Total
+                    </Label>
+                    <Label className='text-lg font-medium  ml-auto mt-4'>
+                        $ {totalPrice}
+                    </Label>
                 </div>
             </CardFooter>
         </Card>

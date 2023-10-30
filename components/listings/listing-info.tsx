@@ -10,6 +10,7 @@ import {
     AvatarImage,
 } from "@/components/ui/avatar"
 import { useMounted } from '@/hooks/use-mounted';
+import { Separator } from '../ui/separator';
 
 const Map = dynamic(() => import('../listing-map'), { ssr: false })
 
@@ -44,9 +45,8 @@ const ListingInfo: FC<ListingInfoProps> = ({
     const coordinates = getByValue(locationValue)?.latlng
 
     return (
-        <div className="col-span-4 flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-
+        <div className="col-span-5 flex flex-col gap-8 w-full">
+            <div className="flex flex-col gap-2 ml-2">
                 <div
                     className='
                         text-xl
@@ -62,8 +62,6 @@ const ListingInfo: FC<ListingInfoProps> = ({
                         <AvatarFallback>STAY</AvatarFallback>
                     </Avatar>
                     <div>Hosted by {user?.name}</div>
-
-
                 </div>
                 <div
                     className='
@@ -75,20 +73,20 @@ const ListingInfo: FC<ListingInfoProps> = ({
                         text-muted-foreground
                     '
                 >
-                    <div>
+                    <span className='font-medium'>
                         {guestCount} guests
-                    </div>
-                    <div>
+                    </span>
+                    <span className='font-medium'>
                         {roomCount} rooms
-                    </div>
-                    <div>
+                    </span>
+                    <span className='font-medium'>
                         {bathroomCount} bathrooms
-                    </div>
+                    </span>
 
 
                 </div>
             </div>
-            <hr />
+            <Separator />
             {category && (
                 <ListingCategory
                     icon={category.icon}
@@ -96,11 +94,11 @@ const ListingInfo: FC<ListingInfoProps> = ({
                     description={category.description}
                 />
             )}
-            <hr />
-            <div className="text-lg font-light text-muted-foreground">
+            <Separator />
+            <div className="text-lg  text-muted-foreground font-medium">
                 {description}
             </div>
-            <hr />
+            <Separator />
             <Map
                 center={coordinates}
             />

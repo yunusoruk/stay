@@ -11,12 +11,14 @@ interface DatePickerProps {
     value: DateRange
     disabledDates?: Date[]
     onChange: (value: DateRange) => void
+    month?: number
 }
 
 export default function DatePicker({
     onChange,
     value,
-    disabledDates
+    disabledDates,
+    month
 }: DatePickerProps) {
 
     const disabledDays = [
@@ -32,7 +34,7 @@ export default function DatePicker({
                 defaultMonth={value?.from}
                 selected={value}
                 onSelect={value => onChange(value as DateRange)}
-                numberOfMonths={1}
+                numberOfMonths={month || 1}
                 disabled={disabledDays}
 
             />
