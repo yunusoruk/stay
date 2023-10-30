@@ -24,7 +24,7 @@ const Search = () => {
             return getByValue(locationValue as string)?.label
         }
 
-        return 'Where are you going?'
+        return 'Where'
     }, [getByValue, locationValue])
 
     const durationLabel = useMemo(() => {

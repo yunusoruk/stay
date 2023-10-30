@@ -2,15 +2,12 @@
 
 import useCountries from '@/hooks/use-countries';
 import { SafeUser, SafeListing, SafeReservation } from '@/types';
-import { Listing, Reservation } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { FC, useCallback, useMemo } from 'react';
 import { format } from 'date-fns'
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import HeartButton from '../heart-button';
-// import HeartButton from '../HeartButton';
 
 interface ListingCardProps {
     data: SafeListing
@@ -97,14 +94,14 @@ const ListingCard: FC<ListingCardProps> = ({
                         />
                     </div>
                 </div>
-                <div className="font-semibold text-lg">
+                <div className="font-semibold text-lg truncate px-1">
                     {location?.region}, {location?.label}
                 </div>
-                <div className="font-light text-muted-foreground">
+                <div className="font-light text-muted-foreground px-1">
                     {reservationDate || data.category}
                 </div>
-                <div className="flex flex-row items-center gap-1">
-                    <div className="font-semibold">
+                <div className="flex flex-row items-center gap-1 px-1">
+                    <div className="font-medium">
                         $ {price}
                     </div>
                     {!reservationDate && (
@@ -113,6 +110,8 @@ const ListingCard: FC<ListingCardProps> = ({
                 </div>
                 {onAction && actionLabel && (
                     <Button
+                        className='mt-2'
+                        variant='destructive'
                         disabled={disabled}
                         onClick={handleCancel}
 

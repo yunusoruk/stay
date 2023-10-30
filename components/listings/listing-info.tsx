@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/avatar"
 import { useMounted } from '@/hooks/use-mounted';
 
-const Map = dynamic(() => import('../map'))
+const Map = dynamic(() => import('../listing-map'), { ssr: false })
 
 interface ListingInfoProps {
     user: SafeUser
@@ -104,6 +104,7 @@ const ListingInfo: FC<ListingInfoProps> = ({
             <Map
                 center={coordinates}
             />
+
         </div>
     );
 }

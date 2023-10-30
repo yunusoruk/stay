@@ -29,11 +29,13 @@ const PropertiesClient: FC<PropertiesClientProps> = ({
         axios.delete(`/api/listings/${id}`)
             .then(() => {
                 toast({
-                    description: "Listing successfully deleted."
+                    description: "Listing successfully removed."
                 })
                 router.refresh()
             })
-            .catch((error) => {
+            .catch((error: any) => {
+                console.log(error);
+
                 toast({
                     description: "Something went wrong."
                 })

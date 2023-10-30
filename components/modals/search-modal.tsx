@@ -49,7 +49,7 @@ const SearchModal: FC<SearchModalProps> = ({ }) => {
     console.log(location);
 
 
-    const Map = useMemo(() => dynamic(() => import('../map'), {
+    const Map = useMemo(() => dynamic(() => import('../listing-map'), {
         ssr: false
     }), [location])
 

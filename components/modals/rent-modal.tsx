@@ -69,7 +69,7 @@ const RentModal = ({ }) => {
     const bathroomCount = watch('bathroomCount')
     const imageSrc = watch('imageSrc')
 
-    const Map = useMemo(() => dynamic(() => import('../map'), {
+    const Map = useMemo(() => dynamic(() => import('../listing-map'), {
         ssr: false
     }), [location])
 
@@ -288,7 +288,7 @@ const RentModal = ({ }) => {
                                             Title
                                         </FormLabel>
                                         <FormControl>
-                                            <Input disabled={isLoading} {...field} />
+                                            <Input placeholder='Title' disabled={isLoading} {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -302,7 +302,7 @@ const RentModal = ({ }) => {
                                             Description
                                         </FormLabel>
                                         <FormControl>
-                                            <Input disabled={isLoading} {...field} />
+                                            <Input placeholder='Description' disabled={isLoading} {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -344,7 +344,7 @@ const RentModal = ({ }) => {
                                             Price
                                         </FormLabel>
                                         <FormControl>
-                                            <Input disabled={isLoading} type='number'  {...field} />
+                                            <Input placeholder='$' disabled={isLoading} type='number'  {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
