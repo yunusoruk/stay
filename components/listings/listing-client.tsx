@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { DateRange } from 'react-day-picker';
-import { categories } from '../categories';
+import { categories } from '@/config/categories';
 
 
 const initialDateRange = {

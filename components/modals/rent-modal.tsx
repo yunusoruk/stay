@@ -9,13 +9,13 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogDescription, DialogHeader, DialogTitle, DialogContent } from '../ui/dialog';
 import { useModal } from '@/hooks/use-modal-store';
-import { categories } from '../categories';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { FileUpload } from '../file-upload';
 import { Input } from '../ui/input';
 import Counter from '../rent-counter';
+import { categories } from '@/config/categories';
 
 
 enum STEPS {
@@ -89,7 +89,6 @@ const RentModal = ({ }) => {
     }
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        console.log(data);
 
 
         if (step !== STEPS.PRICE) {
