@@ -30,7 +30,7 @@ interface CountrySelectProps {
     onChange: (value: CountrySelectValue) => void
 }
 
-const CountrySelect: FC<CountrySelectProps> = ({ value, onChange }) => {
+const CountrySelect: FC<CountrySelectProps> = ({ onChange }) => {
 
     const { getAll } = useCountries()
 
