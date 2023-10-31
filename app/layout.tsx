@@ -81,9 +81,9 @@ export default function RootLayout({
           fontHeading.variable
         )}
       >
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem >
-          {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ModalProvider />
+          {children}
           <Analytics />
           <Toaster />
           <TailwindIndicator />

@@ -45,7 +45,7 @@
     "next-auth": "^4.22.4",
     "next-cloudinary": "^4.25.0",
     "next-themes": "^0.2.1",
-    "postcss": "8.4.27",
+    "postcss": "^8.4.31",
     "postmark": "^3.0.19",
     "query-string": "^8.1.0",
     "react": "18.2.0",

@@ -22,13 +22,11 @@ const ListingPage = async ({ params }: { params: IParams }) => {
     }
     return (
 
-        <div>
-            <ListingClient
-                listing={listing}
-                reservations={reservations}
-                currentUser={currentUser}
-            />
-        </div>
+        <ListingClient
+            listing={listing}
+            reservations={reservations}
+            currentUser={currentUser}
+        />
     );
 }
 export default ListingPage;

@@ -113,8 +113,8 @@ const ListingClient: FC<ListingClientProps> = ({
     }, [dateRange, listing.price]);
 
     return (
-        <div className='container'>
-            <div className="max-w-screen-lg mx-auto">
+        <div className="container">
+            <div>
                 <div className="flex flex-col gap-2">
                     <ListingHead
                         title={listing.title}
@@ -123,8 +123,18 @@ const ListingClient: FC<ListingClientProps> = ({
                         id={listing.id}
                         currentUser={currentUser}
                     />
-                    <div className="flex md:flex-row w-full mt-6 space-x-6">
-                        <div className="flex flex-cols-5 w-full">
+                    <div
+                        className='
+                            grid
+                            grid-cols-1
+                            lg:grid-cols-6
+                            xl:grid-cols-7
+                            2xl:grid-cols-8
+                            md:gap-10
+                            mt-6
+                        '
+                    >
+                        <div className="2xl:col-span-6 xl:col-span-5 lg:col-span-4">
                             <ListingInfo
                                 user={listing.user}
                                 category={category}
@@ -135,8 +145,9 @@ const ListingClient: FC<ListingClientProps> = ({
                                 locationValue={listing.locationValue}
                             />
                         </div>
-
-                        <div className="flex md:ml-auto">
+                        <div
+                            className='order-first mb-10 lg:order-last lg:col-span-2'
+                        >
                             <ListingReservation
                                 title={listing.title}
                                 price={listing.price}
@@ -147,48 +158,10 @@ const ListingClient: FC<ListingClientProps> = ({
                                 disabled={isLoading}
                                 disabledDates={disabledDates}
                             />
+
+
                         </div>
                     </div>
-                    {/* <div
-                        className='
-                            grid
-                            grid-cols-1
-                            md:grid-cols-8
-                            md:gap-10
-                            mt-6
-                        '
-                    >
-                        <ListingInfo
-                            user={listing.user}
-                            category={category}
-                            description={listing.description}
-                            roomCount={listing.roomCount}
-                            guestCount={listing.guestCount}
-                            bathroomCount={listing.bathroomCount}
-                            locationValue={listing.locationValue}
-                        />
-                        <div
-                            className='
-                                order-first
-                                mb-10
-                                md:order-last
-                                md:col-span-3
-                                
-                            '
-                        >
-                            <ListingReservation
-                                price={listing.price}
-                                totalPrice={totalPrice}
-                                onChangeDate={(value) => setDateRange(value)}
-                                dateRange={dateRange}
-                                onSubmit={onCreateReservation}
-                                disabled={isLoading}
-                                disabledDates={disabledDates}
-                            />
-
-
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>

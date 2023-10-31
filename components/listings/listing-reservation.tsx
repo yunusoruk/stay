@@ -34,11 +34,14 @@ const ListingReservation: FC<ListingReservationProps> = ({
     return (
         <Card className='bg-background border-none shadow-none '>
             <CardHeader>
-                <CardTitle className='flex flex-row items-center justify-center space-x-2 line-clamp-1 pb-1'>
-                    <Label className='text-md '>A night at</Label>
-                    <Label className='text-md text-primary'>
-                        {title}
+                <CardTitle className='flex flex-row items-center justify-center space-x-2'>
+                    <Label className='text-md line-clamp-1 pb-1'>
+                        A night at
+                        <span className='text-primary'>
+                            {` ${title}`}
+                        </span>
                     </Label>
+
                 </CardTitle>
             </CardHeader>
             <Separator className='mb-2' />

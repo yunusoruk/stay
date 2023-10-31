@@ -28,7 +28,6 @@ const ListingHead: FC<ListingHeadProps> = ({
 
     return (
         <>
-
             <PageHeader className="pt-8 pb-4">
                 <PageHeaderHeading>{title}</PageHeaderHeading>
                 <PageHeaderDescription>{`${location?.region}, ${location?.label}`}</PageHeaderDescription>
