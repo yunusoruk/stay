@@ -5,6 +5,7 @@ import getReservations from '@/actions/get-reservations';
 import EmptyState from '@/components/empty-state';
 import type { FC } from 'react';
 import ReservationsClient from '../../../components/reservations/reservations-client';
+import { redirect } from 'next/navigation';
 
 
 const ReservationsPage = async () => {
@@ -12,12 +13,7 @@ const ReservationsPage = async () => {
     const currentUser = await getCurrentUser()
 
     if (!currentUser) {
-        return (
-            <EmptyState
-                title="Unauthorized"
-                subtitle="Please login"
-            />
-        )
+        redirect('/login')
     }
 
     const reservations = await getReservations({

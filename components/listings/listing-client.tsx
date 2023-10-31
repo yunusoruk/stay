@@ -3,7 +3,6 @@
 import ListingHead from '@/components/listings/listing-head';
 import ListingInfo from '@/components/listings/listing-info';
 import ListingReservation from '@/components/listings/listing-reservation';
-import useLoginModal from '@/hooks/use-login-modal';
 import { SafeListing, SafeReservation, SafeUser } from '@/types';
 import axios from 'axios';
 import { differenceInDays, eachDayOfInterval, setDate } from 'date-fns';
@@ -33,7 +32,6 @@ const ListingClient: FC<ListingClientProps> = ({
     currentUser
 }) => {
 
-    const loginModal = useLoginModal();
     const router = useRouter();
 
     const disabledDates = useMemo(() => {
@@ -62,7 +60,7 @@ const ListingClient: FC<ListingClientProps> = ({
 
     const onCreateReservation = useCallback(() => {
         if (!currentUser) {
-            return loginModal.onOpen();
+            return router.push('/login');
         }
         setIsLoading(true);
 
@@ -93,8 +91,7 @@ const ListingClient: FC<ListingClientProps> = ({
             dateRange,
             listing?.id,
             router,
-            currentUser,
-            loginModal
+            currentUser
         ]);
 
     useEffect(() => {

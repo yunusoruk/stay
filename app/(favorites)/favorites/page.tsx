@@ -2,11 +2,16 @@ import getCurrentUser from "@/actions/get-current-user";
 import EmptyState from "@/components/empty-state";
 import FavoritesClient from "../../../components/favorites/favorites-client";
 import getFavoriteListings from "@/actions/get-favorites";
+import { redirect } from "next/navigation";
 
 const ListingPage = async () => {
 
     const listings = await getFavoriteListings()
     const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+        redirect('/login')
+    }
 
 
     if (listings.length === 0) {
